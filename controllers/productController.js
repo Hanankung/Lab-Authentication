@@ -41,7 +41,7 @@ exports.updateProduct = async (req, res) => {
         const product = await Product.findById(id);
         if (!product) return res.status(404).json({ message: 'Product not found' });
         const update = req.body;
-        Object.assign(product, update);
+        // Object.assign(product, update);
         const updatedProduct = await product.save();
         res.json(updatedProduct);
     } catch (err) {

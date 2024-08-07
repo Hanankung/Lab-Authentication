@@ -11,5 +11,5 @@ const userSchema = new mongoose.Schema({
 },
 {timestamps: true, versionKey: false} //มันจะใส่วันที่โดยอัติโนมัติ
 );
-const user = mongoose.model('Product', userSchema); //ต้องทำการ export และ กำหนดชื่อตัว ที่จะเก็บ productSchema
+const user = mongoose.model('User', userSchema); //ต้องทำการ export และ กำหนดชื่อตัว ที่จะเก็บ productSchema
 module.exports = user

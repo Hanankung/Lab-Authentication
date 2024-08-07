@@ -1,14 +1,14 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user"); // Corrected from Product to User
+const User = require("../model/user"); // Corrected from Product to User
 
 // Register
 exports.register = async (req, res) => {
-    const { username, password } = req.body;
+    const { user_name, password ,name,role} = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ username, password: hashedPassword });
+        const user = new User({ user_name, password: hashedPassword ,name,role });
         await user.save();
         res.status(201).send("User registered");
     } catch (err) {
