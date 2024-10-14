@@ -16,11 +16,11 @@ exports.register = async (req, res) => {
     }
 };
 
-// Login
+//Login
 exports.login = async (req, res) => {
-    const { user_name, password } = req.body;
+    const {username,password} = req.body;
     try {
-        const user = await User.findOne({ user_name });
+        const user = await User.findOne({ username});
         if (!user) return res.status(400).send("User not found");
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).send("Invalid credentials");
@@ -30,11 +30,10 @@ exports.login = async (req, res) => {
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: "30m" }
         );
-
         const refreshToken = jwt.sign(
             { userId: user._id },
             process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: "45m" } 
+            { expiresIn: "45m"}
         );
         res.json({user, accessToken, refreshToken });
     } catch (err) {
@@ -44,7 +43,7 @@ exports.login = async (req, res) => {
 
 // Refresh
 exports.refresh = async (req, res) => {
-    const token = req.headers['authorization']?.split(' ')[1]; // 'Bearer <token>'
+    const token  = req.headers['authorization']?.split(' ')[1];
     if (!token) return res.sendStatus(401);
     jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
